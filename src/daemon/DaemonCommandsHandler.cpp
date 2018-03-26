@@ -7,7 +7,7 @@
 #include "p2p/net_node.h"
 #include "cryptonote_core/miner.h"
 #include "cryptonote_core/core.h"
-#include "cryptonote_protocol/cryptonote_protocol_andler.h"
+#include "cryptonote_protocol/cryptonote_protocol_handler.h"
 #include "serialization/serialization_tools.h"
 #include "version.h"
 
