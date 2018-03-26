@@ -5,6 +5,8 @@
             "sources": [
                 "src/main.cc",
                 "src/cryptonote_core/cryptonote_format_utils.cpp",
+                "src/DaemonCommandsHandler.cpp",
+                "src/Daemon.cpp",
                 "src/crypto/tree-hash.c",
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
