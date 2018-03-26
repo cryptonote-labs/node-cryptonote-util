@@ -17,8 +17,19 @@
 
 #pragma once
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+#include <istream>
+#include "IInputStream.h"
+
+namespace Common {
+
+class StdInputStream : public IInputStream {
+public:
+  StdInputStream(std::istream& in);
+  StdInputStream& operator=(const StdInputStream&) = delete;
+  size_t readSome(void* data, size_t size) override;
+
+private:
+  std::istream& in;
+};
+
+}

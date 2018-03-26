@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "CommandLine.h"
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace command_line
+{
+  const arg_descriptor<bool> arg_help = {"help", "Produce help message"};
+  const arg_descriptor<bool> arg_version = {"version", "Output version information"};
+  const arg_descriptor<std::string> arg_data_dir = {"data-dir", "Specify data directory"};
+}

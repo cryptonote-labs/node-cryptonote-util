@@ -15,10 +15,22 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "StringInputStream.h"
+#include <string.h>
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Common {
+
+StringInputStream::StringInputStream(const std::string& in) : in(in), offset(0) {
+}
+
+size_t StringInputStream::readSome(void* data, size_t size) {
+  if (size > in.size() - offset) {
+    size = in.size() - offset;
+  }
+
+  memcpy(data, in.data() + offset, size);
+  offset += size;
+  return size;
+}
+
+}

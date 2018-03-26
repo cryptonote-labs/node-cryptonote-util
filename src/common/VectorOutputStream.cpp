@@ -15,10 +15,16 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "VectorOutputStream.h"
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Common {
+
+VectorOutputStream::VectorOutputStream(std::vector<uint8_t>& out) : out(out) {
+}
+
+size_t VectorOutputStream::writeSome(const void* data, size_t size) {
+  out.insert(out.end(), static_cast<const uint8_t*>(data), static_cast<const uint8_t*>(data) + size);
+  return size;
+}
+
+}

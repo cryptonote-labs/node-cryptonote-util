@@ -15,10 +15,34 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "MemoryInputStream.h"
+#include <algorithm>
+#include <cassert>
+#include <cstring> // memcpy
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Common {
+
+MemoryInputStream::MemoryInputStream(const void* buffer, size_t bufferSize) : 
+buffer(static_cast<const char*>(buffer)), bufferSize(bufferSize), position(0) {}
+
+size_t MemoryInputStream::getPosition() const {
+  return position;
+}
+
+bool MemoryInputStream::endOfStream() const {
+  return position == bufferSize;
+}
+
+size_t MemoryInputStream::readSome(void* data, size_t size) {
+  assert(position <= bufferSize);
+  size_t readSize = std::min(size, bufferSize - position);
+
+  if (readSize > 0) {
+    memcpy(data, buffer + position, readSize);
+    position += readSize;
+  }
+  
+  return readSize;
+}
+
+}

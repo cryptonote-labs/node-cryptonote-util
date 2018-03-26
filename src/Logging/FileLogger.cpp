@@ -15,10 +15,16 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "FileLogger.h"
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Logging {
+
+FileLogger::FileLogger(Level level) : StreamLogger(level) {
+}
+
+void FileLogger::init(const std::string& fileName) {
+  fileStream.open(fileName, std::ios::app);
+  StreamLogger::attachToStream(fileStream);
+}
+
+}

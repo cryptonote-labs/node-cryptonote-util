@@ -15,10 +15,19 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "LoggerRef.h"
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Logging {
+
+LoggerRef::LoggerRef(ILogger& logger, const std::string& category) : logger(&logger), category(category) {
+}
+
+LoggerMessage LoggerRef::operator()(Level level, const std::string& color) const {
+  return LoggerMessage(*logger, category, level, color);
+}
+
+ILogger& LoggerRef::getLogger() const {
+  return *logger;
+}
+
+}

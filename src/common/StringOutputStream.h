@@ -17,8 +17,18 @@
 
 #pragma once
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+#include <string>
+#include "IOutputStream.h"
+
+namespace Common {
+
+class StringOutputStream : public IOutputStream {
+public:
+  StringOutputStream(std::string& out);
+  size_t writeSome(const void* data, size_t size) override;
+
+private:
+  std::string& out;
+};
+
+}

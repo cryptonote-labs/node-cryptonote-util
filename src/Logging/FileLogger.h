@@ -17,8 +17,18 @@
 
 #pragma once
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+#include <fstream>
+#include "StreamLogger.h"
+
+namespace Logging {
+
+class FileLogger : public StreamLogger {
+public:
+  FileLogger(Level level = DEBUGGING);
+  void init(const std::string& filename);
+
+private:
+  std::ofstream fileStream;
+};
+
+}

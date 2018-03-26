@@ -15,10 +15,20 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "StdOutputStream.h"
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Common {
+
+StdOutputStream::StdOutputStream(std::ostream& out) : out(out) {
+}
+
+size_t StdOutputStream::writeSome(const void* data, size_t size) {
+  out.write(static_cast<const char*>(data), size);
+  if (out.bad()) {
+    return 0;
+  }
+
+  return size;
+}
+
+}

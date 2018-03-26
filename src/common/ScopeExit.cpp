@@ -15,10 +15,27 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "ScopeExit.h"
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Tools {
+
+ScopeExit::ScopeExit(std::function<void()>&& handler) :
+  m_handler(std::move(handler)),
+  m_cancelled(false) {
+}
+
+ScopeExit::~ScopeExit() {
+  if (!m_cancelled) {
+    m_handler();
+  }
+}
+
+void ScopeExit::cancel() {
+  m_cancelled = true;
+}
+
+void ScopeExit::resume() {
+  m_cancelled = false;
+}
+
+}

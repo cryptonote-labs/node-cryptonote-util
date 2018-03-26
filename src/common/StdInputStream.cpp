@@ -15,10 +15,16 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "StdInputStream.h"
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
-#endif
+namespace Common {
+
+StdInputStream::StdInputStream(std::istream& in) : in(in) {
+}
+
+size_t StdInputStream::readSome(void* data, size_t size) {
+  in.read(static_cast<char*>(data), size);
+  return in.gcount();
+}
+
+}

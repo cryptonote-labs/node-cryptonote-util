@@ -17,8 +17,10 @@
 
 #pragma once
 
-#if defined(_MSC_VER)
-#define POD_CLASS struct
-#else
-#define POD_CLASS class
+#ifndef __cplusplus
+#ifdef __clang__
+
+#define static_assert _Static_assert
+
+#endif
 #endif
